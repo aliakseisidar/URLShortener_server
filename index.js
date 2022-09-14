@@ -4,6 +4,7 @@ const authRouter = require("./user/authRouter");
 const urlRouter = require("./url/urlRouter");
 const adminRouter = require("./admin/adminRouter");
 const redirectRouter = require("./redirect/redirectRouter");
+const { mongoDB_URI } = require("./config");
 
 const PORT = process.env.PORT || 5000;
 
@@ -17,9 +18,7 @@ app.use("/", redirectRouter);
 
 const start = async () => {
   try {
-    await mongoose.connect(
-      "mongodb+srv://aliaksei:qwe123@cluster0.vhqbs.mongodb.net/?retryWrites=true&w=majority"
-    );
+    await mongoose.connect(mongoDB_URI);
     app.listen(PORT, () => console.log("Server works..."));
   } catch (error) {
     console.log(error);
