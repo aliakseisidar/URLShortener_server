@@ -18,13 +18,16 @@ class urlController {
 
       const { originalURL, title, tags } = req.body;
       const path = shortURLgenerator();
+      const wrongDate = new Date();
+      wrongDate.setDate(wrongDate.getDate()+1)
+
 
       const url = new URL({
         title,
         originalURL,
         shortURL: `http://localhost:5000/${path}`,
         path,
-        createdAt: new Date().toISOString(),
+        createdAt: wrongDate.toISOString(),
         userId: req.user.id,
         tags,
       });
@@ -126,6 +129,9 @@ class urlController {
         return res
           .status(403)
           .json({ message: "You do not have access to this URL" });
+      }
+      if (tags.length > 4) {
+        return res.status(500).json({ message: `Something went wrong` })
       }
       await URL.findByIdAndUpdate(_id, { tags });
       return res.json({ message: `URL is updated` });

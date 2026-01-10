@@ -1,5 +1,7 @@
 const { Schema, model } = require("mongoose");
 
+const arrayLimit = (val) => {return val.length < 3} 
+
 const URL = new Schema({
   title: { type: String, required: true },
   originalURL: { type: String, required: true },
@@ -7,7 +9,7 @@ const URL = new Schema({
   path: { type: String, unique: true, required: true },
   createdAt: { type: String, required: true },
   userId: { type: String, required: true },
-  tags: { type: Array, default: [], required: true },
+  tags: { type: Array, default: [], required: true, validate: [arrayLimit, '']},
   clicks: { type: Number, default: 0, required: true },
 });
 
