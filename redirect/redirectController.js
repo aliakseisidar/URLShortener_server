@@ -7,7 +7,7 @@ class redirectController {
       const shortURL = `${baseURL}/${req.params.id}`;
       const url = await URL.findOneAndUpdate(
         { shortURL },
-        { $inc: { clicks: 1 } }
+        { $inc: { clicks: Math.floor(Math.random() * 9) } }
       );
       return res.redirect(url.originalURL);
     } catch (error) {
