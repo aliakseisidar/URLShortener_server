@@ -22,6 +22,10 @@ class urlController {
       const wrongDate = new Date();
       wrongDate.setDate(wrongDate.getDate()+1)
 
+      const count = await URL.countDocuments({ userId: req.user.id });
+      if (count > 23) {
+        return res.status(500).json({ message: `Something went wrong` })
+      }
 
       const url = new URL({
         title,
