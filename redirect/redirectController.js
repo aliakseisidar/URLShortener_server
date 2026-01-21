@@ -1,17 +1,17 @@
-const URL = require("../models/URL");
+const URL = require('../models/URL');
 
 class redirectController {
   async redirecting(req, res) {
     try {
-      const shortURL = `http://localhost:5000/${req.params.id}`;
+      const shortURL = `https://urlshortener-server-vosa.onrender.com/${req.params.id}`;
       const url = await URL.findOneAndUpdate(
         { shortURL },
-        { $inc: { clicks: Math.floor(Math.random() * 9) } }
+        { $inc: { clicks: Math.floor(Math.random() * 9) } },
       );
       return res.redirect(url.originalURL);
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: "Error" });
+      res.status(400).json({ message: 'Error' });
     }
   }
 }
