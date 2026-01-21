@@ -25,7 +25,7 @@ class authController {
       }
 
       const isAlot = await User.countDocuments();
-      if (isAlot > 10) {
+      if (isAlot > 300) {
         return res
           .status(500)
           .json({ message: 'Registration is temporarily disabled' });
