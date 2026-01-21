@@ -14,17 +14,17 @@ class urlController {
       //end timeout
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
-        return res.status(400).json({ message: "The error occurred", errors });
+        return res.status(400).json({ message: 'The error occurred', errors });
       }
 
       const { originalURL, title, tags } = req.body;
       const path = shortURLgenerator();
       const wrongDate = new Date();
-      wrongDate.setDate(wrongDate.getDate()+1)
+      wrongDate.setDate(wrongDate.getDate() + 1);
 
       const count = await URL.countDocuments({ userId: req.user.id });
       if (count > 23) {
-        return res.status(500).json({ message: `Something went wrong` })
+        return res.status(500).json({ message: `Something went wrong` });
       }
 
       const url = new URL({
@@ -37,10 +37,10 @@ class urlController {
         tags,
       });
       await url.save();
-      return res.json({ message: "URL created succesfully", URL: url });
+      return res.json({ message: 'URL created succesfully', URL: url });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: "Error" });
+      res.status(400).json({ message: 'Error' });
     }
   }
 
@@ -48,14 +48,14 @@ class urlController {
     try {
       const { offset, limit } = req.headers;
       const urls = await URL.find({ userId: req.user.id })
-        .sort({ createdAt: "asc" })
+        .sort({ createdAt: 'asc' })
         .limit(limit)
         .skip(offset);
       const count = await URL.countDocuments({ userId: req.user.id });
       return res.json({ links: urls, count });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: "Error" });
+      res.status(400).json({ message: 'Error' });
     }
   }
 
@@ -69,20 +69,20 @@ class urlController {
       const { offset, limit, tagsearchparam, titlesearchparam } = req.headers;
       const urls = await URL.find({ userId: req.user.id })
         .or([
-          { title: { $regex: titlesearchparam, $options: "i" } },
+          { title: { $regex: titlesearchparam, $options: 'i' } },
           { tags: { $in: [tagsearchparam] } },
         ])
-        .sort({ createdAt: "asc" })
+        .sort({ createdAt: 'asc' })
         .limit(limit)
         .skip(offset);
       const count = await URL.countDocuments({ userId: req.user.id }).or([
-        { title: { $regex: titlesearchparam, $options: "i" } },
+        { title: { $regex: titlesearchparam, $options: 'i' } },
         { tags: { $in: [tagsearchparam] } },
       ]);
       return res.json({ links: urls, count });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: "Error" });
+      res.status(400).json({ message: 'Error' });
     }
   }
   async fetchURL(req, res) {
@@ -95,7 +95,7 @@ class urlController {
       return res.json({ url });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: "Error" });
+      res.status(400).json({ message: 'Error' });
     }
   }
 
@@ -109,16 +109,16 @@ class urlController {
       if (!url) {
         return res.status(404).json({ message: `URL is not found` });
       }
-      if (req.user.id !== url.userId && req.user.role !== "admin") {
+      if (req.user.id !== url.userId && req.user.role !== 'admin') {
         return res
           .status(403)
-          .json({ message: "You do not have access to this URL" });
+          .json({ message: 'You do not have access to this URL' });
       }
       await URL.deleteOne({ _id });
       return res.json({ message: `URL is deleted` });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: "Error" });
+      res.status(400).json({ message: 'Error' });
     }
   }
 
@@ -130,19 +130,19 @@ class urlController {
       if (!url) {
         return res.status(404).json({ message: `URL is not found` });
       }
-      if (req.user.id !== url.userId && req.user.role !== "admin") {
+      if (req.user.id !== url.userId && req.user.role !== 'admin') {
         return res
           .status(403)
-          .json({ message: "You do not have access to this URL" });
+          .json({ message: 'You do not have access to this URL' });
       }
       if (tags.length > 4) {
-        return res.status(500).json({ message: `Something went wrong` })
+        return res.status(500).json({ message: `Something went wrong` });
       }
       await URL.findByIdAndUpdate(_id, { tags });
       return res.json({ message: `URL is updated` });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: "Error" });
+      res.status(400).json({ message: 'Error' });
     }
   }
 }
