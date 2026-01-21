@@ -22,9 +22,18 @@ class urlController {
       const wrongDate = new Date();
       wrongDate.setDate(wrongDate.getDate() + 1);
 
+      const isAlot = await URL.countDocuments();
+      if (isAlot > 10000) {
+        return res
+          .status(500)
+          .json({ message: `Shorting is temporarily disabled` });
+      }
+
       const count = await URL.countDocuments({ userId: req.user.id });
       if (count > 23) {
-        return res.status(500).json({ message: `Something went wrong` });
+        return res
+          .status(500)
+          .json({ message: `Registration is temporarily disabled` });
       }
 
       const url = new URL({
