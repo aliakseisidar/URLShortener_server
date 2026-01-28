@@ -8,6 +8,9 @@ const shortURLgenerator = () => {
 
 class urlController {
   async shortURL(req, res) {
+    // #swagger.tags = ['URLs']
+    // #swagger.summary = 'Создать короткую ссылку'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       //timeout
       await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -54,6 +57,9 @@ class urlController {
   }
 
   async fetchURLs(req, res) {
+    // #swagger.tags = ['URLs']
+    // #swagger.summary = 'Получить все короткие ссылки пользователя'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       const { offset, limit } = req.headers;
       const urls = await URL.find({ userId: req.user.id })
@@ -69,6 +75,9 @@ class urlController {
   }
 
   async searchURLs(req, res) {
+    // #swagger.tags = ['URLs']
+    // #swagger.summary = 'Поиск коротких ссылок пользователя'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       /*    const user = {
         id: req.user.id,
@@ -95,6 +104,9 @@ class urlController {
     }
   }
   async fetchURL(req, res) {
+    // #swagger.tags = ['URLs']
+    // #swagger.summary = 'Получить информацию о конкретной короткой ссылке'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       const shortURL = req.query.shortURL;
       const url = await URL.findOne({ shortURL });
@@ -109,6 +121,9 @@ class urlController {
   }
 
   async deleteURL(req, res) {
+    // #swagger.tags = ['URLs']
+    // #swagger.summary = 'Удалить короткую ссылку'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       //timeout
       await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -132,6 +147,9 @@ class urlController {
   }
 
   async updateTags(req, res) {
+    // #swagger.tags = ['URLs']
+    // #swagger.summary = 'Обновить тэги короткой ссылки'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       const _id = req.query._id;
       const tags = req.body.tags;

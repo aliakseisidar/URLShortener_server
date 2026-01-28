@@ -5,6 +5,8 @@ const urlRouter = require("./url/urlRouter");
 const adminRouter = require("./admin/adminRouter");
 const redirectRouter = require("./redirect/redirectRouter");
 const { mongoDB_URI } = require("./config");
+const swaggerUi = require("swagger-ui-express");
+const swaggerDocument = require("./swagger-output.json");
 
 const cors = require("cors");
 const corsOptions = {
@@ -19,6 +21,7 @@ const app = express();
 
 app.use(cors(corsOptions));
 app.use(express.json());
+app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDocument));
 app.use("/auth", authRouter);
 app.use("/url", urlRouter);
 app.use("/admin", adminRouter);

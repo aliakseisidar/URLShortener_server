@@ -3,6 +3,8 @@ const { baseURL } = require("../config")
 
 class redirectController {
   async redirecting(req, res) {
+    // #swagger.tags = ['Redirect']
+    // #swagger.summary = 'Перенаправление'
     try {
       const shortURL = `${baseURL}/${req.params.id}`;
       const url = await URL.findOneAndUpdate(
