@@ -10,9 +10,11 @@ const swaggerDocument = require("./swagger-output.json");
 
 const cors = require("cors");
 const corsOptions = {
-  origin: "*",
+  origin: true,
   credentials: true,
   exposedHeaders: ['Location'],
+  methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+  allowedHeaders: ['Content-Type', 'Authorization'],
   optionSuccessStatus: 200,
 };
 
