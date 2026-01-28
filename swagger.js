@@ -3,15 +3,15 @@ const swaggerAutogen = require('swagger-autogen')({ openapi: '3.0.0' });
 
 const doc = {
   info: {
-    title: 'My Project API',
-    description: 'Автоматически сгенерированная документация',
+    title: 'URLShortener',
+    description: 'Учебный сервис для создания коротких ссылок',
   },
-  host: 'localhost:5000', // Укажите ваш хост и порт
-  schemes: ['http'],
+  host: 'https://urlshortener-server-vosa.onrender.com/', // Укажите ваш хост и порт
+  schemes: ['https'],
   components: {
     securitySchemes: {
       bearerAuth: {
-        type: 'http',
+        type: 'https',
         scheme: 'bearer',
         bearerFormat: 'JWT',
       }
