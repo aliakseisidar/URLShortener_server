@@ -21,7 +21,7 @@ async redirecting(req, res) {
         }
 
     // Для обычных пользователей делаем редирект
-    return res.redirect(targetUrl);
+    return res.redirect(url.originalURL);
 
   } catch (error) {
     console.error(error);
