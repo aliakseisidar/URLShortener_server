@@ -12,6 +12,7 @@ const cors = require("cors");
 const corsOptions = {
   origin: "*",
   credentials: true,
+  exposedHeaders: ['Location'],
   optionSuccessStatus: 200,
 };
 

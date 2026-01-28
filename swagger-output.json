@@ -581,6 +581,17 @@
           }
         ],
         "responses": {
+          "302": {
+        "description": "Перенаправление на оригинальный URL",
+        "headers": {
+          "Location": {
+            "description": "URL для перехода",
+            "schema": {
+              "type": "string"
+            }
+          }
+        }
+      },
           "400": {
             "description": "Bad Request"
           }

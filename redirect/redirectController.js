@@ -5,6 +5,15 @@ class redirectController {
   async redirecting(req, res) {
     // #swagger.tags = ['Redirect']
     // #swagger.summary = 'Перенаправление'
+    /* #swagger.responses[302] = {
+      description: 'Перенаправление на оригинальный URL',
+      headers: {
+        Location: {
+          description: 'URL для перехода',
+          type: 'string'
+        }
+      }
+  } */
     try {
       const shortURL = `${baseURL}/${req.params.id}`;
       const url = await URL.findOneAndUpdate(
