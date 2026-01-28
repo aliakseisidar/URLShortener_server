@@ -21,8 +21,6 @@ class urlController {
 
       const { originalURL, title, tags } = req.body;
       const path = shortURLgenerator();
-      const wrongDate = new Date();
-      wrongDate.setDate(wrongDate.getDate() + 1);
 
       const isAlot = await URL.countDocuments();
       if (isAlot > 10000) {
@@ -32,10 +30,10 @@ class urlController {
       }
 
       const count = await URL.countDocuments({ userId: req.user.id });
-      if (count > 23) {
+      if (count > 50) {
         return res
           .status(500)
-          .json({ message: `Registration is temporarily disabled` });
+          .json({ message: `You can't have more than 50 short links.` });
       }
 
       const url = new URL({
@@ -43,7 +41,7 @@ class urlController {
         originalURL,
         shortURL: `https://urlshortener-server-vosa.onrender.com/${path}`,
         path,
-        createdAt: wrongDate.toISOString(),
+        createdAt: new Date().toISOString(),
         userId: req.user.id,
         tags,
       });
@@ -161,8 +159,8 @@ class urlController {
           .status(403)
           .json({ message: 'You do not have access to this URL' });
       }
-      if (tags.length > 4) {
-        return res.status(500).json({ message: `Something went wrong` });
+      if (tags.length > 20) {
+        return res.status(500).json({ message: `There should be no more than 20 tags` });
       }
       await URL.findByIdAndUpdate(_id, { tags });
       return res.json({ message: `URL is updated` });

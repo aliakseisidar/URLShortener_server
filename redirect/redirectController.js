@@ -5,10 +5,10 @@ class redirectController {
     // #swagger.tags = ['Redirect']
     // #swagger.summary = 'Перенаправление'
     try {
-      const shortURL = `http://localhost:5000/${req.params.id}`;
+      const shortURL = `https://urlshortener-server-vosa.onrender.com/${req.params.id}`;
       const url = await URL.findOneAndUpdate(
         { shortURL },
-        { $inc: { clicks: Math.floor(Math.random() * 9) } },
+        { $inc: { clicks: 1 } },
       );
       return res.redirect(url.originalURL);
     } catch (error) {
