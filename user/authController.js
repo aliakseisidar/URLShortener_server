@@ -13,6 +13,8 @@ const generateAccessToken = (id, username, role) => {
 };
 class authController {
   async registration(req, res) {
+    // #swagger.tags = ['Auth']
+    // #swagger.summary = 'Регистрация пользователя'
     try {
       //timeout
       await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -46,6 +48,8 @@ class authController {
     }
   }
   async login(req, res) {
+    // #swagger.tags = ['Auth']
+    // #swagger.summary = 'Авторизация пользователя'
     try {
       //timeout
       await new Promise((resolve) => setTimeout(resolve, 3000));

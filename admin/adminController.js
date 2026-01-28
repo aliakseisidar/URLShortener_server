@@ -7,6 +7,9 @@ const yup = require("yup");
 
 class adminController {
   async getUsers(req, res) {
+    // #swagger.tags = ['Admin']
+    // #swagger.summary = 'Получить список всех пользователей'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       //timeout
       await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -37,6 +40,9 @@ class adminController {
   }
 
   async updateUser(req, res) {
+    // #swagger.tags = ['Admin']
+    // #swagger.summary = 'Изменить пользоваеля'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       //timeout
       await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -64,6 +70,9 @@ class adminController {
   }
 
   async deleteUser(req, res) {
+    // #swagger.tags = ['Admin']
+    // #swagger.summary = 'Удалить пользоваеля'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       const _id = req.query._id;
       if (req.user.role !== "admin") {
@@ -86,6 +95,9 @@ class adminController {
   }
 
   async fetchURLsByUser(req, res) {
+    // #swagger.tags = ['Admin']
+    // #swagger.summary = 'Получить все короткие ссылки пользователя'
+    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       if (req.user.role !== "admin") {
         return res.status(403).json({ message: `Users cannot do it!` });
