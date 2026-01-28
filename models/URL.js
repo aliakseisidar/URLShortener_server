@@ -1,6 +1,6 @@
 const { Schema, model } = require("mongoose");
 
-const arrayLimit = (val) => {return val.length < 3} 
+const arrayLimit = (val) => {return val.length < 20} 
 
 const URL = new Schema({
   title: { type: String, required: true },
