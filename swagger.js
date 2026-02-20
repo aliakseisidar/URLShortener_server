@@ -6,7 +6,7 @@ const doc = {
     title: 'URLShortener',
     description: 'Учебный сервис для создания коротких ссылок',
   },
-  host: 'https://urlshortener-server-vosa.onrender.com/', // Укажите ваш хост и порт
+  host: 'http://localhost:5000/', // Укажите ваш хост и порт
   schemes: ['https'],
   components: {
     securitySchemes: {

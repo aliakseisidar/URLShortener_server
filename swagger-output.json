@@ -7,7 +7,7 @@
   },
   "servers": [
     {
-      "url": "https://urlshortener-server-vosa.onrender.com/"
+      "url": "http://localhost:5000/"
     }
   ],
   "tags": [

@@ -11,9 +11,6 @@ class urlController {
     // #swagger.tags = ['URLs']
     // #swagger.summary = 'Создать короткую ссылку'
     // #swagger.security = [{ "bearerAuth": [] }]
-    // #swagger.tags = ['URLs']
-    // #swagger.summary = 'Создать короткую ссылку'
-    // #swagger.security = [{ "bearerAuth": [] }]
     try {
       //timeout
       await new Promise((resolve) => setTimeout(resolve, 3000));
@@ -21,25 +18,10 @@ class urlController {
       const errors = validationResult(req);
       if (!errors.isEmpty()) {
         return res.status(400).json({ message: 'The error occurred', errors });
-        return res.status(400).json({ message: 'The error occurred', errors });
       }
 
       const { originalURL, title, tags } = req.body;
       const path = shortURLgenerator();
-
-      const isAlot = await URL.countDocuments();
-      if (isAlot > 10000) {
-        return res
-          .status(500)
-          .json({ message: `Shorting is temporarily disabled` });
-      }
-
-      const count = await URL.countDocuments({ userId: req.user.id });
-      if (count > 50) {
-        return res
-          .status(500)
-          .json({ message: `You can't have more than 50 short links.` });
-      }
 
       const isAlot = await URL.countDocuments();
       if (isAlot > 10000) {
@@ -66,18 +48,13 @@ class urlController {
       });
       await url.save();
       return res.json({ message: 'URL created succesfully', URL: url });
-      return res.json({ message: 'URL created succesfully', URL: url });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: 'Error' });
       res.status(400).json({ message: 'Error' });
     }
   }
 
   async fetchURLs(req, res) {
-    // #swagger.tags = ['URLs']
-    // #swagger.summary = 'Получить все короткие ссылки пользователя'
-    // #swagger.security = [{ "bearerAuth": [] }]
     // #swagger.tags = ['URLs']
     // #swagger.summary = 'Получить все короткие ссылки пользователя'
     // #swagger.security = [{ "bearerAuth": [] }]
@@ -93,14 +70,10 @@ class urlController {
     } catch (error) {
       console.log(error);
       res.status(400).json({ message: 'Error' });
-      res.status(400).json({ message: 'Error' });
     }
   }
 
   async searchURLs(req, res) {
-    // #swagger.tags = ['URLs']
-    // #swagger.summary = 'Поиск коротких ссылок пользователя'
-    // #swagger.security = [{ "bearerAuth": [] }]
     // #swagger.tags = ['URLs']
     // #swagger.summary = 'Поиск коротких ссылок пользователя'
     // #swagger.security = [{ "bearerAuth": [] }]
@@ -114,15 +87,12 @@ class urlController {
       const urls = await URL.find({ userId: req.user.id })
         .or([
           { title: { $regex: titlesearchparam, $options: 'i' } },
-          { title: { $regex: titlesearchparam, $options: 'i' } },
           { tags: { $in: [tagsearchparam] } },
         ])
-        .sort({ createdAt: 'asc' })
         .sort({ createdAt: 'asc' })
         .limit(limit)
         .skip(offset);
       const count = await URL.countDocuments({ userId: req.user.id }).or([
-        { title: { $regex: titlesearchparam, $options: 'i' } },
         { title: { $regex: titlesearchparam, $options: 'i' } },
         { tags: { $in: [tagsearchparam] } },
       ]);
@@ -130,13 +100,9 @@ class urlController {
     } catch (error) {
       console.log(error);
       res.status(400).json({ message: 'Error' });
-      res.status(400).json({ message: 'Error' });
     }
   }
   async fetchURL(req, res) {
-    // #swagger.tags = ['URLs']
-    // #swagger.summary = 'Получить информацию о конкретной короткой ссылке'
-    // #swagger.security = [{ "bearerAuth": [] }]
     // #swagger.tags = ['URLs']
     // #swagger.summary = 'Получить информацию о конкретной короткой ссылке'
     // #swagger.security = [{ "bearerAuth": [] }]
@@ -150,14 +116,10 @@ class urlController {
     } catch (error) {
       console.log(error);
       res.status(400).json({ message: 'Error' });
-      res.status(400).json({ message: 'Error' });
     }
   }
 
   async deleteURL(req, res) {
-    // #swagger.tags = ['URLs']
-    // #swagger.summary = 'Удалить короткую ссылку'
-    // #swagger.security = [{ "bearerAuth": [] }]
     // #swagger.tags = ['URLs']
     // #swagger.summary = 'Удалить короткую ссылку'
     // #swagger.security = [{ "bearerAuth": [] }]
@@ -171,10 +133,8 @@ class urlController {
         return res.status(404).json({ message: `URL is not found` });
       }
       if (req.user.id !== url.userId && req.user.role !== 'admin') {
-      if (req.user.id !== url.userId && req.user.role !== 'admin') {
         return res
           .status(403)
-          .json({ message: 'You do not have access to this URL' });
           .json({ message: 'You do not have access to this URL' });
       }
       await URL.deleteOne({ _id });
@@ -182,14 +142,10 @@ class urlController {
     } catch (error) {
       console.log(error);
       res.status(400).json({ message: 'Error' });
-      res.status(400).json({ message: 'Error' });
     }
   }
 
   async updateTags(req, res) {
-    // #swagger.tags = ['URLs']
-    // #swagger.summary = 'Обновить тэги короткой ссылки'
-    // #swagger.security = [{ "bearerAuth": [] }]
     // #swagger.tags = ['URLs']
     // #swagger.summary = 'Обновить тэги короткой ссылки'
     // #swagger.security = [{ "bearerAuth": [] }]
@@ -201,13 +157,8 @@ class urlController {
         return res.status(404).json({ message: `URL is not found` });
       }
       if (req.user.id !== url.userId && req.user.role !== 'admin') {
-      if (req.user.id !== url.userId && req.user.role !== 'admin') {
         return res
           .status(403)
-          .json({ message: 'You do not have access to this URL' });
-      }
-      if (tags.length > 20) {
-        return res.status(500).json({ message: `There should be no more than 20 tags` });
           .json({ message: 'You do not have access to this URL' });
       }
       if (tags.length > 20) {
@@ -217,7 +168,6 @@ class urlController {
       return res.json({ message: `URL is updated` });
     } catch (error) {
       console.log(error);
-      res.status(400).json({ message: 'Error' });
       res.status(400).json({ message: 'Error' });
     }
   }
