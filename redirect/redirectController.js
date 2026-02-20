@@ -1,9 +1,10 @@
 const URL = require("../models/URL");
+const { baseURL } = require("../config")
 
 class redirectController {
   async redirecting(req, res) {
     try {
-      const shortURL = `http://localhost:5000/${req.params.id}`;
+      const shortURL = `${baseURL}/${req.params.id}`;
       const url = await URL.findOneAndUpdate(
         { shortURL },
         { $inc: { clicks: 1 } }

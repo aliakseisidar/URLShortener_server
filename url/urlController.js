@@ -1,5 +1,6 @@
 const URL = require("../models/URL");
 const { validationResult } = require("express-validator");
+const { baseURL } = require("../config")
 
 const shortURLgenerator = () => {
   return `${(Math.random() + 1).toString(36).substring(7)}`;
@@ -22,7 +23,7 @@ class urlController {
       const url = new URL({
         title,
         originalURL,
-        shortURL: `http://localhost:5000/${path}`,
+        shortURL: `${baseURL}/${path}`,
         path,
         createdAt: new Date().toISOString(),
         userId: req.user.id,
